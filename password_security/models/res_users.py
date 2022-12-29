@@ -145,8 +145,9 @@ class ResUsers(models.Model):
 
         estimation = self.get_estimation(password)
         if estimation["score"] < company_id.password_estimate:
-            raise UserError(estimation["feedback"]["warning"])
-
+            #raise UserError(estimation["feedback"]["warning"])
+            raise UserError( _("This password has a score of %s and must have a score of: %s") % (
+                estimation["score"], company_id.password_estimate))
         return True
 
     def _password_has_expired(self):
